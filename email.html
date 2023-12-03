@@ -1,0 +1,55 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Form</title>
+    <script src="HomePage/js/server.js"></script>
+</head>
+<body>
+
+<h2>Contact Us</h2>
+
+<form id="emailForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="message">Message:</label>
+    <textarea id="message" name="message" required></textarea>
+
+    <button type="button" onclick="submitForm()">Submit</button>
+</form>
+
+<script>
+    function submitForm() {
+        var name = document.getElementById('name').value;
+        var email = document.getElementById('email').value;
+        var message = document.getElementById('message').value;
+
+        // Send form data to the server
+        fetch('/send-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({name, email, message }),
+        })
+        .then(response => response.text())
+        .then(result => {
+            console.log(result);
+            alert('Email sent successfully!');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to send email.');
+        });
+    }
+</script>
+
+</body>
+</html>
